@@ -9,11 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Miwok">
-        <activity android:name=".PhrasesActivity"></activity>
-        <activity android:name=".ColorActivity" />
-        <activity android:name=".FamilyActivity" />
+        <activity android:name="com.devyat.miwok.activities.PhrasesActivity"></activity>
+        <activity android:name="com.devyat.miwok.activities.ColorActivity" />
+        <activity android:name="com.devyat.miwok.activities.FamilyActivity" />
         <activity
-            android:name=".NumbersActivity"
+            android:name="com.devyat.miwok.activities.NumbersActivity"
             android:label="Numbers" />
         <activity android:name=".MainActivity">
             <intent-filter>

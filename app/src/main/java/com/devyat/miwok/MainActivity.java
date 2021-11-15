@@ -10,6 +10,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.devyat.miwok.activities.ColorActivity;
+import com.devyat.miwok.activities.FamilyActivity;
+import com.devyat.miwok.activities.NumbersActivity;
+import com.devyat.miwok.activities.PhrasesActivity;
+
 import java.io.Console;
 
 public class MainActivity extends AppCompatActivity {

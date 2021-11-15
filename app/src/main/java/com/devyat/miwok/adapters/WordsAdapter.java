@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.devyat.miwok.R;
+import com.devyat.miwok.helpers.AudioPlayer;
 import com.devyat.miwok.models.Word;
 
 import java.util.List;
@@ -45,7 +46,7 @@ public class WordsAdapter extends ArrayAdapter<Word> {
 
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Item clicked", Toast.LENGTH_SHORT).show();
+                AudioPlayer.playAsset(getContext(), getItem(position).getAudioId());
             }
         });
         return listItemView;

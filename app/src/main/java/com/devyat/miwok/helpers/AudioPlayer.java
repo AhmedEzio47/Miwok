@@ -1,16 +1,12 @@
 package com.devyat.miwok.helpers;
 
+import android.content.Context;
 import android.media.MediaPlayer;
-import java.io.File;
 
 public class AudioPlayer {
-    public void play(String path, String fileName){
-        //set up MediaPlayer
-        MediaPlayer mp = new MediaPlayer();
-
+    public static void playAsset(Context context, int resource) {
         try {
-            mp.setDataSource(path + File.separator + fileName);
-            mp.prepare();
+            MediaPlayer mp = MediaPlayer.create(context, resource);
             mp.start();
         } catch (Exception e) {
             e.printStackTrace();
