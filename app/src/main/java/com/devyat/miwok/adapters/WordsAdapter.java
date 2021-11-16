@@ -1,13 +1,16 @@
 package com.devyat.miwok.adapters;
 
 import android.content.Context;
+import android.media.AudioAttributes;
+import android.media.AudioFocusRequest;
+import android.media.AudioManager;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,8 +24,12 @@ import java.util.List;
 import static android.view.View.*;
 
 public class WordsAdapter extends ArrayAdapter<Word> {
+    private AudioPlayer audioPlayer;
+    Context context;
+
     public WordsAdapter(@NonNull Context context, @NonNull List<Word> objects) {
         super(context, 0, objects);
+        this.context = context;
     }
 
     @NonNull
@@ -42,13 +49,24 @@ public class WordsAdapter extends ArrayAdapter<Word> {
         } else {
             wordImage.setImageResource(getItem(position).getImageId());
         }
-        listItemView.setOnClickListener(new View.OnClickListener(){
+        listItemView.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                AudioPlayer.playAsset(getContext(), getItem(position).getAudioId());
+                if (audioPlayer == null) {
+                    audioPlayer = new AudioPlayer();
+                }
+                audioPlayer.prepareAsset(getContext(), getItem(position).getAudioId());
+                audioPlayer.play();
+
             }
         });
         return listItemView;
+    }
+
+    public void releaseAudioPlayer() {
+        if (audioPlayer != null) {
+            audioPlayer.release();
+        }
     }
 }

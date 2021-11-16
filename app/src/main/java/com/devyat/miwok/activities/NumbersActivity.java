@@ -20,7 +20,7 @@ public class NumbersActivity extends AppCompatActivity {
         setContentView(R.layout.activity_numbers);
         populateNumbers();
     }
-
+    private WordsAdapter itemsAdapter;
     private  void populateNumbers(){
         // Create a list of words
         ArrayList<Word> words = new ArrayList<Word>();
@@ -30,10 +30,16 @@ public class NumbersActivity extends AppCompatActivity {
         words.add(new Word("four", "oyyisa", R.drawable.number_four, R.raw.number_four));
         words.add(new Word("five", "massokka", R.drawable.number_five, R.raw.number_five));
 
-        WordsAdapter itemsAdapter = new WordsAdapter(this, words);
+        itemsAdapter = new WordsAdapter(this, words);
 
         ListView listView = findViewById(R.id.numbers_list);
 
         listView.setAdapter(itemsAdapter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        itemsAdapter.releaseAudioPlayer();
     }
 }

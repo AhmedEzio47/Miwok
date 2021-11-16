@@ -20,7 +20,7 @@ public class PhrasesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_phrases);
         populatePhrases();
     }
-
+    private WordsAdapter itemsAdapter;
     private  void populatePhrases(){
         // Create a list of words
         ArrayList<Word> words = new ArrayList<Word>();
@@ -30,10 +30,16 @@ public class PhrasesActivity extends AppCompatActivity {
         words.add(new Word("How are you feeling?", "michәksәs?", R.raw.phrase_how_are_you_feeling));
         words.add(new Word("I’m feeling good.", "kuchi achit", R.raw.phrase_im_feeling_good));
 
-        WordsAdapter itemsAdapter = new WordsAdapter(this, words);
+        itemsAdapter = new WordsAdapter(this, words);
 
         ListView listView = findViewById(R.id.phrases_list);
 
         listView.setAdapter(itemsAdapter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        itemsAdapter.releaseAudioPlayer();
     }
 }

@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
         onFamilyClick();
         onColorsClick();
         onPhrasesClick();
-        sendEmail();
     }
 
     private void startActivityOnClick(int id, Class c) {
@@ -61,22 +60,4 @@ public class MainActivity extends AppCompatActivity {
         startActivityOnClick(R.id.phrases, PhrasesActivity.class);
     }
 
-    private void sendEmail(){
-        Button btn = findViewById(R.id.send_mail_btn);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_SENDTO);
-                intent.setData(Uri.parse("mailto:salmadelmaz@gmail.com"));
-                intent.putExtra(Intent.EXTRA_SUBJECT, "Love message");
-                intent.putExtra(Intent.EXTRA_TEXT, "Love you babe, from your my first Android Native app");
-                if(null != intent.resolveActivity(getPackageManager())){
-                    startActivity(intent);
-                }else{
-                    Log.v("No_mail_app", "No mail app");
-                }
-            }
-        });
-
-    }
 }
