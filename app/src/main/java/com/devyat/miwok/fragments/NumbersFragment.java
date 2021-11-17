@@ -1,9 +1,14 @@
-package com.devyat.miwok.activities;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.devyat.miwok.fragments;
 
 import android.os.Bundle;
-import android.widget.GridView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.devyat.miwok.R;
@@ -12,14 +17,20 @@ import com.devyat.miwok.models.Word;
 
 import java.util.ArrayList;
 
-public class NumbersActivity extends AppCompatActivity {
+public class NumbersFragment extends Fragment {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_numbers, container, false);
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_numbers);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         populateNumbers();
     }
+
     private WordsAdapter itemsAdapter;
     private  void populateNumbers(){
         // Create a list of words
@@ -30,16 +41,22 @@ public class NumbersActivity extends AppCompatActivity {
         words.add(new Word("four", "oyyisa", R.drawable.number_four, R.raw.number_four));
         words.add(new Word("five", "massokka", R.drawable.number_five, R.raw.number_five));
 
-        itemsAdapter = new WordsAdapter(this, words);
+        itemsAdapter = new WordsAdapter(getActivity(), words);
 
-        ListView listView = findViewById(R.id.numbers_list);
+        ListView listView = getView().findViewById(R.id.numbers_list);
 
         listView.setAdapter(itemsAdapter);
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         itemsAdapter.releaseAudioPlayer();
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Numbers";
     }
 }

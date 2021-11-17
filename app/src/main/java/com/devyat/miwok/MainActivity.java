@@ -1,63 +1,42 @@
 package com.devyat.miwok;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager2.widget.ViewPager2;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
-import com.devyat.miwok.activities.ColorActivity;
-import com.devyat.miwok.activities.FamilyActivity;
-import com.devyat.miwok.activities.NumbersActivity;
-import com.devyat.miwok.activities.PhrasesActivity;
+import com.devyat.miwok.fragments.ColorsFragment;
+import com.devyat.miwok.fragments.PhrasesFragment;
+import com.devyat.miwok.adapters.FragmentPagerAdapter;
+import com.devyat.miwok.fragments.NumbersFragment;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
-import java.io.Console;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
+    private ViewPager2 viewPager;
+    private FragmentPagerAdapter pagerAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        registerOnClickListeners();
-    }
 
-    private void registerOnClickListeners() {
-        onNumbersClick();
-        onFamilyClick();
-        onColorsClick();
-        onPhrasesClick();
-    }
+        List<Fragment> fragmentList = new ArrayList<Fragment>();
+        fragmentList.add(new NumbersFragment());
+        fragmentList.add(new ColorsFragment());
+        fragmentList.add(new PhrasesFragment());
 
-    private void startActivityOnClick(int id, Class c) {
-        View tv = findViewById(id);
-        Intent intent = new Intent(this, c);
-        tv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(intent);
-            }
-        });
-    }
-
-    private void onNumbersClick() {
-        startActivityOnClick(R.id.numbers, NumbersActivity.class);
-    }
-
-    private void onFamilyClick() {
-        startActivityOnClick(R.id.family, FamilyActivity.class);
-    }
-
-    private void onColorsClick() {
-        startActivityOnClick(R.id.colors, ColorActivity.class);
-    }
-
-    private void onPhrasesClick() {
-        startActivityOnClick(R.id.phrases, PhrasesActivity.class);
+        viewPager = findViewById(R.id.viewpager);
+        pagerAdapter = new FragmentPagerAdapter(this, fragmentList);
+        viewPager.setAdapter(pagerAdapter);
+        // Give the TabLayout the ViewPager
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        new TabLayoutMediator(tabLayout, viewPager,
+                (tab, position) -> tab.setText(pagerAdapter.getItemTitle(position))
+        ).attach();
     }
 
 }

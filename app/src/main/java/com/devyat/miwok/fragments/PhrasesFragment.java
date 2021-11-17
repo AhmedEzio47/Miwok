@@ -1,9 +1,13 @@
-package com.devyat.miwok.activities;
+package com.devyat.miwok.fragments;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
-import android.widget.GridView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.devyat.miwok.R;
@@ -12,14 +16,20 @@ import com.devyat.miwok.models.Word;
 
 import java.util.ArrayList;
 
-public class PhrasesActivity extends AppCompatActivity {
+public class PhrasesFragment extends Fragment {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_phrases);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_phrases, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         populatePhrases();
     }
+
     private WordsAdapter itemsAdapter;
     private  void populatePhrases(){
         // Create a list of words
@@ -30,16 +40,22 @@ public class PhrasesActivity extends AppCompatActivity {
         words.add(new Word("How are you feeling?", "michәksәs?", R.raw.phrase_how_are_you_feeling));
         words.add(new Word("I’m feeling good.", "kuchi achit", R.raw.phrase_im_feeling_good));
 
-        itemsAdapter = new WordsAdapter(this, words);
+        itemsAdapter = new WordsAdapter(getActivity(), words);
 
-        ListView listView = findViewById(R.id.phrases_list);
+        ListView listView = getView().findViewById(R.id.phrases_list);
 
         listView.setAdapter(itemsAdapter);
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         itemsAdapter.releaseAudioPlayer();
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Phrases";
     }
 }
